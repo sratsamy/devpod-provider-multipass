@@ -103,6 +103,7 @@ func Create() error {
 		multipass.SetLaunchCloudInit(cloudInitFilePath),
 		multipass.SetMounts(mounts),
 		multipass.SetLaunchImage(opts.Image),
+		multipass.SetLaunchPorts(opts.Ports),
 	)
 	if err != nil {
 		return err

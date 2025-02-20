@@ -13,6 +13,7 @@ const (
 	MULTIPASS_DISK_SIZE = "MULTIPASS_DISK_SIZE"
 	MULTIPASS_MEMORY    = "MULTIPASS_MEMORY"
 	MULTIPASS_MOUNTS    = "MULTIPASS_MOUNTS"
+	MULTIPASS_PORTS     = "MULTIPASS_PORTS"
 )
 
 type Options struct {
@@ -22,6 +23,7 @@ type Options struct {
 	DiskSize string // --disk arg passed into multipass launch command
 	Memory   string // --memory arg passed into multipass launch command
 	Mounts   string // host to multipass instance mounts
+	Ports    string // New field
 }
 
 func OptsFromEnv() (*Options, error) {
@@ -60,6 +62,8 @@ func OptsFromEnv() (*Options, error) {
 	}
 
 	opts.Mounts = os.Getenv(MULTIPASS_MOUNTS)
+
+	opts.Ports = os.Getenv(MULTIPASS_PORTS)
 
 	return opts, nil
 }

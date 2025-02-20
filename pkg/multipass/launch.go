@@ -16,6 +16,7 @@ type launchArgs struct {
 	cloudInit string
 	image     string
 	mounts    []MountArg
+	ports     string
 }
 
 type argSetter func(*launchArgs)
@@ -61,6 +62,10 @@ func (c *client) Launch(argSetters ...argSetter) error {
 
 	if launchArgz.image != "" {
 		args = append(args, launchArgz.image)
+	}
+
+	if launchArgz.ports != "" {
+		args = append(args, "--network", fmt.Sprintf("name=en0,mode=manual,port_forwards=%s", launchArgz.ports))
 	}
 
 	log.Default().Printf("[multipass] %s", args)
@@ -115,5 +120,11 @@ func SetLaunchImage(image string) argSetter {
 func SetMounts(mounts []MountArg) argSetter {
 	return func(args *launchArgs) {
 		args.mounts = mounts
+	}
+}
+
+func SetLaunchPorts(ports string) argSetter {
+	return func(args *launchArgs) {
+		args.ports = ports
 	}
 }
