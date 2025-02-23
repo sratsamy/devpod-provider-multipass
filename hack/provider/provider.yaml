@@ -16,6 +16,7 @@ optionGroups:
     defaultVisible: true
   - options:
       - MULTIPASS_PATH
+      - MULTIPASS_PORTS
     name: "Multipass advanced options"
     defaultVisible: false
   - options:
@@ -81,10 +82,16 @@ options:
     description: "If DevPod should inject docker credentials into the remote host."
     default: "true"
   MULTIPASS_PORTS:
-    description: "Port forwarding configuration (e.g. '443:443/tcp' for HTTPS)"
-    default: "443:443/tcp"
+    description: "Port forwarding configuration (comma separated list, e.g. '443:443/tcp,80:80/tcp')"
+    default: "443:443/tcp,80:80/tcp"
     required: false
     global: true
+    suggestions:
+      - "443:443/tcp"
+      - "80:80/tcp"
+      - "443:443/tcp,80:80/tcp"
+      - "3000:3000/tcp"
+      - "8080:8080/tcp"
 agent:
   path: /home/devpod/.devpod/devpod
   injectGitCredentials: ${INJECT_GIT_CREDENTIALS}
